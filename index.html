@@ -10,14 +10,19 @@
     <div class="chat-container">
         <header>
             <h1>RAG Document Chatbot</h1>
-            <p>Ask questions about your uploaded documents</p>
+            <p>Upload a document, then ask questions about it</p>
         </header>
+
+        <div class="upload-area" id="upload-area">
+            <input type="file" id="file-input" accept=".pdf,.txt" hidden />
+            <button id="upload-btn">Upload PDF or TXT</button>
+            <span id="upload-status"></span>
+        </div>
 
         <div id="chat-messages" class="messages">
             <div class="message bot-message">
                 <div class="message-content">
-                    Hi! I'm your RAG chatbot. I can answer questions about the
-                    documents that have been loaded. What would you like to know?
+                    Hi! Upload a PDF or TXT file first, then ask me anything about it.
                 </div>
             </div>
         </div>
@@ -33,6 +38,7 @@
         </div>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
     <script src="/script.js"></script>
 </body>
 </html>
