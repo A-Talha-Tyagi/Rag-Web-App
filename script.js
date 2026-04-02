@@ -10,29 +10,30 @@ function addMessage(text, sender) {
     content.classList.add("message-content");
     content.textContent = text;
 
-messageDiv.appendChild(content);
-messagesDiv.appendChild(messageDiv);
-messsagesDiv.scrollTop = messagesDiv.scrollHeight;
+    messageDiv.appendChild(content);
+    messagesDiv.appendChild(messageDiv);
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
 }
 
 function showTyping() {
     const typingDiv = document.createElement("div");
     typingDiv.classList.add("message", "bot-message");
+    typingDiv.id = "typing-indicator";
     typingDiv.innerHTML = `
         <div class="typing-indicator">
-            <span></span><span></span><span></span
-        <div>`;
+            <span></span><span></span><span></span>
+        </div>`;
     messagesDiv.appendChild(typingDiv);
     messagesDiv.scrollTop = messagesDiv.scrollHeight;
 }
 
 function removeTyping() {
-    const typing = document.getElementByID("typing-indicator");
+    const typing = document.getElementById("typing-indicator");
     if (typing) typing.remove();
 }
 
 async function sendMessage() {
-    const message = userInput.ariaValueMax.trim();
+    const message = userInput.value.trim();
     if (!message) return;
 
     addMessage(message, "user");
@@ -43,8 +44,8 @@ async function sendMessage() {
     try {
         const response = await fetch("/api/chat", {
             method: "POST",
-            headers: { "Content=Type": "application/json"},
-            body: JSON.stringify({ message}),  
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ message }),
         });
 
         const data = await response.json();
@@ -55,10 +56,10 @@ async function sendMessage() {
         } else {
             addMessage("Sorry, something went wrong. Please try again.", "bot");
         }
-    
+
     } catch (error) {
         removeTyping();
-        addMessage("Error connecting to the server. Please try again", "bot")
+        addMessage("Error connecting to the server. Please try again.", "bot");
     }
 
     sendBtn.disabled = false;
@@ -67,5 +68,5 @@ async function sendMessage() {
 
 sendBtn.addEventListener("click", sendMessage);
 userInput.addEventListener("keypress", (e) => {
-    if (e.key === "Enter") sendMessage ();
-})
+    if (e.key === "Enter") sendMessage();
+});
