@@ -1,7 +1,8 @@
 import "dotenv/config";
-import { DataAPIClient } from "@data/astra-db-ts";
+import { DataAPIClient } from "@datastax/astra-db-ts";
+import OpenAI from "openai";
 
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY});
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 const client = new DataAPIClient(process.env.ASTRA_DB_APPLICATION_TOKEN);
 const db = client.db(process.env.ASTRA_DB_API_ENDPOINT);
@@ -15,7 +16,7 @@ export default async function handler(req, res) {
     const { message } = req.body;
 
     if (!message) {
-        return res.status(400).json({error: "Message is required" });
+        return res.status(400).json({ error: "Message is required" });
     }
     try {
         const embeddingResponse = await openai.embeddings.create({
@@ -40,13 +41,13 @@ export default async function handler(req, res) {
             messages: [
                 {
                     role: "system",
-                    content: `You are helpful assistant. Answer the user's question based
+                    content: `You are a helpful assistant. Answer the user's question based
                     on the following context. If the context doesn't contain relevant
                     information, say so honestly.
-                    Context: 
+                    Context:
                     ${context}`,
                 },
-                {role: "user", content: message },
+                { role: "user", content: message },
             ],
         });
 

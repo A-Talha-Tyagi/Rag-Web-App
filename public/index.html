@@ -1,36 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset=""UTF-8" />
-    <meta name=""viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>RAG Chatbot</title>
-    <link rel=""stylesheet" href="/style.css" />
+    <link rel="stylesheet" href="/style.css" />
 </head>
 <body>
     <div class="chat-container">
         <header>
-            <h1>
-            <p>
+            <h1>RAG Document Chatbot</h1>
+            <p>Ask questions about your uploaded documents</p>
         </header>
-    </div id="chat-messages" class="chat-messages">
-        <div class="message bot-message">
-            <div class="message-content">
-              Hi! I'm your RAG chatbot. I cna answer questions about the documents that have been loaded.
-              What would you like to know?
+
+        <div id="chat-messages" class="messages">
+            <div class="message bot-message">
+                <div class="message-content">
+                    Hi! I'm your RAG chatbot. I can answer questions about the
+                    documents that have been loaded. What would you like to know?
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="input-area">
-        <input
-            type="text"
-            id="user-input"
-            placeholder="Ask a question about your document..."
-        />
-        <button id="send-btn">Send</button>
+        <div class="input-area">
+            <input
+                type="text"
+                id="user-input"
+                placeholder="Ask a question about your document..."
+                autocomplete="off"
+            />
+            <button id="send-btn">Send</button>
         </div>
     </div>
 
     <script src="/script.js"></script>
-</body> 
+</body>
 </html>
