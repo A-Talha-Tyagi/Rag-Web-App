@@ -9,7 +9,7 @@ const db = client.db(process.env.ASTRA_DB_API_ENDPOINT);
 const collection = db.collection(process.env.ASTRA_DB_COLLECTION);
 
 // Split text into chunks with overlap
-function splitTextIntoChunks(text, chunkSize = 500, overlap = 50) {
+function splitTextIntoChunks(text, chunkSize = 1000, overlap = 200) {
     const chunks = [];
     let start = 0;
     while (start < text.length) {

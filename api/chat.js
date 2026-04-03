@@ -13,7 +13,7 @@ export default async function handler(req, res) {
         return res.status(405).json({ error: "Method not allowed" });
     }
 
-    const { message } = req.body;
+    const { message, language } = req.body;
 
     if (!message) {
         return res.status(400).json({ error: "Message is required" });
@@ -29,7 +29,7 @@ export default async function handler(req, res) {
             {},
             {
                 sort: { $vector: embedding },
-                limit: 5,
+                limit: 10,
                 projection: { text: 1, _id: 0 },
             }
         );
@@ -41,11 +41,22 @@ export default async function handler(req, res) {
             messages: [
                 {
                     role: "system",
-                    content: `You are a helpful assistant. Answer the user's question based
-                    on the following context. If the context doesn't contain relevant
-                    information, say so honestly.
-                    Context:
-                    ${context}`,
+                    content: `You are a knowledgeable assistant that answers questions based 
+    on provided document context.
+
+    The user's preferred langauge is ${language}
+    
+    Instructions:
+    -Always respond in the user's preferred language, even if the context is in a different language
+    - Synthesize information across multiple context sections
+    - If the context partially answers the question, provide what you can and note what's missing
+    - Use reasoning to infer answers even if the exact words aren't present
+    - If the context truly contains no relevant information, say so honestly
+    - Do not make up information that isn't supported by the context
+    -Feel free to bring in outside knowledge if it helps answer the question, but clearly indicate when you're doing so
+    
+    Context from the document:
+    ${context}`,
                 },
                 { role: "user", content: message },
             ],

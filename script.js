@@ -4,6 +4,7 @@ const sendBtn = document.getElementById("send-btn");
 const uploadBtn = document.getElementById("upload-btn");
 const fileInput = document.getElementById("file-input");
 const uploadStatus = document.getElementById("upload-status");
+const languageSelect = document.getElementById("language-select");
 
 // ============ FILE UPLOAD ============
 
@@ -105,6 +106,8 @@ async function sendMessage() {
     const message = userInput.value.trim();
     if (!message) return;
 
+    const language = languageSelect.value;
+
     addMessage(message, "user");
     userInput.value = "";
     sendBtn.disabled = true;
@@ -114,7 +117,7 @@ async function sendMessage() {
         const response = await fetch("/api/chat", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ message }),
+            body: JSON.stringify({ message, language }),
         });
 
         const data = await response.json();
